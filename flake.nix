@@ -30,16 +30,18 @@
       devShells = withPkgs (pkgs: {
         default = pkgs.mkShell {
           packages = [
+            # Those we don't need yet are commented out
+
             # Frontend UI language
-            pkgs.nodejs_22 # JS and NodeJS
-            pkgs.pnpm # Package manager
+            # pkgs.nodejs_22 # JS and NodeJS
+            # pkgs.pnpm # Package manager
 
             # Backend service language
-            pkgs.dotnetCorePackages.sdk_9_0 # C# and .NET
+            # pkgs.dotnetCorePackages.sdk_9_0 # C# and .NET
 
             # Platform language
-            pkgs.terraform # IaC language
-            pkgs.docker # Container
+            # pkgs.terraform # IaC language
+            # pkgs.docker # Container
 
             # Project Management
             pkgs.just # Task runner
