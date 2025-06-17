@@ -4,6 +4,7 @@
     "ms-dotnettools.csdevkit",
     "docker.docker",
     "redhat.vscode-yaml",
-    "hashicorp.terraform"
+    "hashicorp.terraform",
+    "nefrob.vscode-just-syntax"
   ]
 }

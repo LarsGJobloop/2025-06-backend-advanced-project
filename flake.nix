@@ -40,7 +40,7 @@
             # pkgs.dotnetCorePackages.sdk_9_0 # C# and .NET
 
             # Platform language
-            # pkgs.terraform # IaC language
+            pkgs.terraform # IaC language
             # pkgs.docker # Container
 
             # Project Management
