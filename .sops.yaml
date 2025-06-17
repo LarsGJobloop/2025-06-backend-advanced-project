@@ -6,8 +6,14 @@ keys:
   - &student_1 age1le65saguzfnrkm0t7ms07cxa36r4m65q8356p3u06n2ycsnwdg2qssad2p
 
 creation_rules:
-  # Rules for everything inside /secrets
-  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+  # Rules for production secrets
+  - path_regex: secrets/[^/]+\.production.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *admin
+          - *larsg
+  # Rules for development secrets
+  - path_regex: secrets/[^/]+\.development.(yaml|json|env|ini)$
     key_groups:
       - age:
           - *admin
