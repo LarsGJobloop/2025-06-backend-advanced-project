@@ -1,0 +1,56 @@
+#cloud-config
+package_update: true
+package_upgrade: false
+packages:
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+
+write_files:
+  - path: /usr/local/bin/synchronize.sh
+    permissions: "0755"
+    owner: root:root
+    content: |
+      ${sync_script}
+
+  - path: /etc/systemd/system/hello.service
+    permissions: "0644"
+    owner: root:root
+    content: |
+      [Unit]
+      Description=Synchronization Script
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/local/bin/synchronize.sh
+
+  - path: /etc/systemd/system/synchronize.timer
+    permissions: "0644"
+    owner: root:root
+    content: |
+      [Unit]
+      Description=Run Synchronization Script every ${sync_interval}
+
+      [Timer]
+      OnBootSec=1min
+      OnUnitActiveSec=${sync_interval}
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+
+runcmd:
+  # Setup Docker Compose
+  - mkdir -p /etc/apt/keyrings
+  - curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  - echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+  - apt-get update
+  - apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  - usermod -aG docker $USER
+  # Enable the auto sync service
+  - systemctl daemon-reexec
+  - systemctl daemon-reload
+  - systemctl enable --now hello.timer

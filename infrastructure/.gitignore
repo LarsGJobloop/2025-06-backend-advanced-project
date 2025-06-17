@@ -1,0 +1,8 @@
+# Ignore all variables as they might contain sensitive information
+*.tfvars
+
+# Ignore dependencies
+.terraform
+
+# Ignore all local statefiles as they might contain sensitive information
+*.tfstate*
