@@ -7,13 +7,13 @@ keys:
 
 creation_rules:
   # Rules for production secrets
-  - path_regex: secrets/[^/]+\.production.(yaml|json|env|ini)$
+  - path_regex: secrets/project-secrets.production.env
     key_groups:
       - age:
           - *admin
           - *larsg
   # Rules for development secrets
-  - path_regex: secrets/[^/]+\.development.(yaml|json|env|ini)$
+  - path_regex: secrets/project-secrets.development.env
     key_groups:
       - age:
           - *admin

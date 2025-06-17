@@ -44,6 +44,7 @@
             # pkgs.docker # Container
 
             # Project Management
+            pkgs.hcloud # Hetzner Cloud CLI
             pkgs.just # Task runner
             pkgs.sops # Secrets managements
             pkgs.age # Encryption tool
